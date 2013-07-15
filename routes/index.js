@@ -27,12 +27,21 @@ exports.hook = function(req, res) {
 					console.log("Out:"+stdout);
 					console.log("Err:"+stderr);
 					
+					//Ideas:
+					//Log output and error logs to txt file and attach to email instead of listing in email. 
+					var fs = require('fs');
+					fs.writeFile("/tmp/errlog.txt", stdout.write(string), function (stderr));
+					fs.writeFile("/tmp/outlog.txt", stdout.write(string), function (stdout));
+					
 					var html = "Script deployed on your CI server..<br/>"
 						+ "STDOUT<br/>"
 						+ stdout.replace(/\n/g, "<br/>")
 						+ "<br/><br/>STDERR<Br/>"
 						+ stderr.replace(/\n/g, "<br/>")
-						+ "<br/><br/>Your failthful servant, CI server";
+						+ "<br/><br/>Your failthful servant, "
+						+ "<br/>CI server";
+					
+
 					
 					var transport = mailer.createTransport("sendmail");
 					transport.sendMail({
